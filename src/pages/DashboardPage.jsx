@@ -1,36 +1,53 @@
+import { useMemo, useState } from "react";
 import HabitForm from "../components/HabitForm";
 import HabitList from "../components/HabitList";
 import SearchBar from "../components/SearchBar";
-import { useHabits } from "../hooks/useHabits";
+import { useHabits } from "../context/HabitsContext";
 
 function DashboardPage() {
   const {
-    // state
-    filter,
-    search,
+    habits,
+    today,
+    totalHabits,
+    completedTodayCount,
+    progressPercent,
 
-    // setters
-    setFilter,
-    setSearch,
-
-    // actions
     addHabit,
     completeHabit,
     completeHabitYesterday,
     deleteHabit,
     renameHabit,
     resetAll,
-
-    // derived
-    filteredHabits,
-    totalHabits,
-    completedTodayCount,
-    progressPercent,
   } = useHabits();
+
+  // ✅ Estado SOLO del dashboard
+  const [filter, setFilter] = useState("all"); // all | pending | done
+  const [search, setSearch] = useState("");
+
+  const filteredHabits = useMemo(() => {
+    const sorted = [...habits].sort((a, b) => {
+      const aDone = a.completedDates.includes(today);
+      const bDone = b.completedDates.includes(today);
+      if (aDone !== bDone) return aDone ? 1 : -1; // pendientes primero
+      return 0;
+    });
+
+    const searchText = search.trim().toLowerCase();
+
+    return sorted.filter((h) => {
+      const doneToday = h.completedDates.includes(today);
+
+      if (filter === "pending" && doneToday) return false;
+      if (filter === "done" && !doneToday) return false;
+
+      if (searchText !== "" && !h.name.toLowerCase().includes(searchText)) return false;
+
+      return true;
+    });
+  }, [habits, today, filter, search]);
 
   return (
     <>
-      {/* HEADER */}
       <div className="header">
         <div>
           <h1 className="title">Habit Tracker</h1>
@@ -50,9 +67,7 @@ function DashboardPage() {
         </div>
       </div>
 
-      {/* GRID */}
       <div className="grid">
-        {/* Columna izquierda */}
         <div className="stack">
           <div className="panel">
             <h3 style={{ margin: 0, marginBottom: 10 }}>Añadir hábito</h3>
@@ -64,6 +79,7 @@ function DashboardPage() {
 
           <div className="panel">
             <h3 style={{ margin: 0, marginBottom: 10 }}>Resumen</h3>
+
             <div className="cards">
               <div className="card">
                 <div className="cardLabel">Total hábitos</div>
@@ -90,7 +106,6 @@ function DashboardPage() {
           </div>
         </div>
 
-        {/* Columna derecha */}
         <div className="panel">
           <h3 style={{ margin: 0, marginBottom: 10 }}>Tus hábitos</h3>
 

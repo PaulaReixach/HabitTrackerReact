@@ -1,4 +1,4 @@
-import { useHabits } from "../hooks/useHabits";
+import { useHabits } from "../context/HabitsContext";
 
 function StatsPage() {
   const { habitsWithStreak, totalHabits, completedTodayCount } = useHabits();
