@@ -1,0 +1,84 @@
+.item{
+  background: linear-gradient(180deg, #ffffff, #fbfcfe);
+  border: 1px solid rgba(15, 23, 42, 0.10);
+  border-radius: 14px;
+  padding: 14px;
+  transition: box-shadow 0.2s ease, transform 0.06s ease;
+}
+
+.item:hover{
+  box-shadow: 0 12px 22px rgba(15, 23, 42, 0.08);
+}
+
+.top{
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.title{
+  font-weight: 800;
+}
+
+.meta{
+  color: rgba(100,116,139,0.95);
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+.pills{
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.pill{
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.04);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  color: #0f172a;
+}
+
+.pillSuccess{
+  background: rgba(22, 163, 74, 0.10);
+  border-color: rgba(22, 163, 74, 0.18);
+  color: #166534;
+}
+
+/* Actions (right side) */
+.actions{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+}
+
+/* Button sizing for this component */
+.btnLg{
+  padding: 11px 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.iconBtn{
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  font-size: 16px;
+}
+
+.iconBtn:hover{
+  background: rgba(15, 23, 42, 0.03);
+}

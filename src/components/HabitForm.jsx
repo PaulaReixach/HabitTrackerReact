@@ -13,18 +13,18 @@ function HabitForm({onAddHabit}){
         setName(""); // limpiamos el input
     }
 
-   return (
-        <form onSubmit={handleSubmit} style={{ display: "flex", gap: 8 }}>
-        <input
-            type="text"
-            placeholder="Ej: Beber 2L de agua"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            style={{ flex: 1, padding: 10 }}
-        />
-        <button type="submit" style={{ padding: "10px 14px" }}>
-            Añadir
-        </button>
+    return (
+        <form onSubmit={handleSubmit} style={{ display: "flex", gap: 10 }}>
+            <input
+                className="input"
+                type="text"
+                placeholder="Ej: Beber 2L de agua"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+            />
+            <button className="btn btnPrimary" type="submit">
+                Añadir
+            </button>
         </form>
     );
 
