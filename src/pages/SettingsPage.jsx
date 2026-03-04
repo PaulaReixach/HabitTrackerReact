@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useHabits } from "../context/HabitsContext";
+import ConfirmModal from "../components/ConfirmModal";
+import useConfirm from "../hooks/useConfirm";
 
 function SettingsPage() {
   const { habits, resetAll, exportHabits, importHabits } = useHabits();
   const [error, setError] = useState("");
+  const confirmUI = useConfirm();
 
   function isValidHabitsArray(data) {
     if (!Array.isArray(data)) return false;
@@ -24,7 +27,7 @@ function SettingsPage() {
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = () => {
+    reader.onload = async () => {
       try {
         const parsed = JSON.parse(reader.result);
 
@@ -32,8 +35,8 @@ function SettingsPage() {
           setError("El JSON no tiene el formato correcto.");
           return;
         }
-
-        const ok = confirm("Esto reemplazará tus hábitos actuales. ¿Continuar?");
+        
+        const ok = await confirmUI.confirm("Esto reemplazará tus hábitos actuales. ¿Continuar?");
         if (!ok) return;
 
         importHabits(parsed);
@@ -69,12 +72,14 @@ function SettingsPage() {
 
         <button
           className="btn btnDanger"
-          onClick={() => {
-            const ok = confirm("¿Seguro que quieres borrar todos los hábitos?");
+          onClick={async () => {
+            const ok = await confirmUI.confirm(
+              "¿Seguro que quieres borrar todos los hábitos?"
+            );
             if (ok) resetAll();
           }}
         >
-          Reset total
+          Borrar todos los hábitos para siempre
         </button>
       </div>
 
@@ -83,6 +88,13 @@ function SettingsPage() {
           {error}
         </p>
       )}
+
+      <ConfirmModal
+            isOpen={confirmUI.isOpen}
+            message={confirmUI.message}
+            onCancel={confirmUI.onCancel}
+            onConfirm={confirmUI.onConfirm}
+          />
     </div>
   );
 }

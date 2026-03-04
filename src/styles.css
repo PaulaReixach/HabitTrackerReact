@@ -277,3 +277,38 @@ body{
   gap: 10px;
   align-items: center;
 }
+
+/* ===== CONFIRM MODAL ===== */
+
+.confirmOverlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 1000;
+}
+
+.confirmModal{
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  width: 340px;
+
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.confirmModal h3{
+  margin-top: 0;
+}
+
+.confirmActions{
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import styles from "./HabitItem.module.css";
+import ConfirmModal from "./ConfirmModal";
+import useConfirm from "../hooks/useConfirm";
 
 function getDateKey(date = new Date()) {
   return date.toISOString().split("T")[0];
@@ -26,6 +28,7 @@ function calculateStreak(completedDates) {
 function HabitItem({ habit, onCompleteHabit, onCompleteYesterday, onDeleteHabit, onRenameHabit }) {
   const [isEditing, setIsEditing] = useState(false);
   const [draftName, setDraftName] = useState(habit.name);
+  const confirmUI = useConfirm();
 
   const today = getDateKey();
   const isCompletedToday = habit.completedDates.includes(today);
@@ -122,10 +125,16 @@ function HabitItem({ habit, onCompleteHabit, onCompleteYesterday, onDeleteHabit,
                 ✏️
               </button>
 
-              <button
+               <button
                 className={`btn ${styles.iconBtn}`}
-                onClick={() => onDeleteHabit(habit.id)}
-                title="Borrar"
+                onClick={async () => {
+                  const ok = await confirmUI.confirm(
+                      <>
+                        ¿Seguro que quieres borrar <strong>{habit.name}</strong>? Esta acción no se puede deshacer.
+                      </>
+                  );
+                  if (ok) onDeleteHabit(habit.id);
+                }}
               >
                 🗑️
               </button>
@@ -141,6 +150,12 @@ function HabitItem({ habit, onCompleteHabit, onCompleteYesterday, onDeleteHabit,
             </>
           )}
         </div>
+          <ConfirmModal
+          isOpen={confirmUI.isOpen}
+          message={confirmUI.message}
+          onCancel={confirmUI.onCancel}
+          onConfirm={confirmUI.onConfirm}
+        />
       </div>
     </li>
   );

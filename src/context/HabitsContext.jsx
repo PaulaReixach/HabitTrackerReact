@@ -1,4 +1,5 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useMemo} from "react";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 /* Helpers */
 function getDateKey(date = new Date()) {
@@ -30,15 +31,7 @@ function calculateStreak(completedDates) {
 const HabitsContext = createContext(null);
 
 function HabitsProvider({ children }) {
-  const [habits, setHabits] = useState(() => {
-    const saved = localStorage.getItem("habits");
-    if (!saved) return [];
-    return JSON.parse(saved);
-  });
-
-  useEffect(() => {
-    localStorage.setItem("habits", JSON.stringify(habits));
-  }, [habits]);
+  const [habits, setHabits] = useLocalStorage("habits", []);
 
   function addHabit(name) {
     const trimmed = name.trim();
@@ -64,7 +57,7 @@ function HabitsProvider({ children }) {
     );
   }
 
-  function completeHabitYesterday(id) {
+  function completeHabitYesterday(id) { 
     const yesterday = getYesterdayKey();
     setHabits((prev) =>
       prev.map((h) => {
@@ -74,6 +67,7 @@ function HabitsProvider({ children }) {
       })
     );
   }
+
 
   function deleteHabit(id) {
     setHabits((prev) => prev.filter((h) => h.id !== id));

@@ -3,6 +3,10 @@ import HabitForm from "../components/HabitForm";
 import HabitList from "../components/HabitList";
 import SearchBar from "../components/SearchBar";
 import { useHabits } from "../context/HabitsContext";
+import ConfirmModal from "../components/ConfirmModal";
+import useConfirm from "../hooks/useConfirm";
+
+
 
 function DashboardPage() {
   const {
@@ -20,7 +24,9 @@ function DashboardPage() {
     resetAll,
   } = useHabits();
 
-  // ✅ Estado SOLO del dashboard
+  const confirmUI = useConfirm();
+
+ 
   const [filter, setFilter] = useState("all"); // all | pending | done
   const [search, setSearch] = useState("");
 
@@ -57,8 +63,10 @@ function DashboardPage() {
         <div className="actionsRow">
           <button
             className="btn btnDanger"
-            onClick={() => {
-              const ok = confirm("¿Seguro que quieres borrar todos los hábitos?");
+            onClick={async () => {
+              const ok = await confirmUI.confirm(
+                "¿Estás seguro de que quieres borrar todos los hábitos? Esta acción no se puede deshacer."
+              );
               if (ok) resetAll();
             }}
           >
@@ -144,6 +152,12 @@ function DashboardPage() {
           </div>
         </div>
       </div>
+      <ConfirmModal
+        isOpen={confirmUI.isOpen}
+        message={confirmUI.message}
+        onCancel={confirmUI.onCancel}
+        onConfirm={confirmUI.onConfirm}
+      />
     </>
   );
 }
