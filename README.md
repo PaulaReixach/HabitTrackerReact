@@ -1,5 +1,5 @@
 # Habit Tracker (React)
-![Habit Tracker Preview](assets/preview.gif)
+![Habit Tracker Preview](src/assets/preview.gif)
 > Aplicación para crear hábitos, seguir rachas y visualizar el progreso en un calendario mensual.
 
 Aplicación de seguimiento de hábitos desarrollada con **React** como proyecto de aprendizaje.  
