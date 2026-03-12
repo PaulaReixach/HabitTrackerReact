@@ -1,16 +1,14 @@
-import HabitItem from "./HabitItem"; 
+import HabitItem from "./HabitItem";
 
-
-
-function HabitList({ 
-  habits, 
-  onCompleteHabit, 
-  onCompleteYesterday, 
-  onDeleteHabit, 
-  onRenameHabit 
-}) { // Componente que muestra la lista de hábitos
+function HabitList({
+  habits,
+  onCompleteHabit,
+  onCompleteYesterday,
+  onDeleteHabit,
+  onRenameHabit,
+}) {
   if (habits.length === 0) {
-    return <p style={{ opacity: 0.7 }}>Aún no tienes hábitos. Añade el primero! 👆</p>;
+    return <p style={{ opacity: 0.7 }}>Aún no tienes hábitos. Añade el primero.</p>;
   }
 
   return (

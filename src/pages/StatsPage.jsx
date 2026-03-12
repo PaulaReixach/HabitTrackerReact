@@ -1,3 +1,4 @@
+import { CheckCircle2, BookOpen, Flame } from "lucide-react";
 import { useHabits } from "../context/HabitsContext";
 import styles from "./StatsPage.module.css";
 
@@ -23,7 +24,7 @@ function StatsPage() {
         <div className={styles.statCard}>
           <div className={styles.cardTop}>
             <span className={styles.cardLabel}>Total hábitos</span>
-            <span className={styles.cardIcon}>📚</span>
+            <BookOpen size={16} className={styles.cardIcon} />
           </div>
           <div className={styles.cardValue}>{totalHabits}</div>
         </div>
@@ -31,7 +32,7 @@ function StatsPage() {
         <div className={styles.statCard}>
           <div className={styles.cardTop}>
             <span className={styles.cardLabel}>Completados hoy</span>
-            <span className={styles.cardIcon}>✅</span>
+            <CheckCircle2 size={16} className={styles.cardIcon} />
           </div>
           <div className={styles.cardValue}>{completedTodayCount}</div>
         </div>
@@ -44,7 +45,12 @@ function StatsPage() {
           {best ? (
             <>
               <div className={styles.bestName}>{best.name}</div>
-              <div className={styles.bestMeta}>🔥 {best.streak} día{best.streak === 1 ? "" : "s"}</div>
+              <div className={styles.bestMeta}>
+                <Flame size={14} className={styles.bestIcon} />
+                <span>
+                  {best.streak} día{best.streak === 1 ? "" : "s"}
+                </span>
+              </div>
             </>
           ) : (
             <div className={styles.empty}>Aún no hay datos</div>

@@ -1,12 +1,11 @@
 import { useMemo, useState } from "react";
+import { Trash2 } from "lucide-react";
 import HabitForm from "../components/HabitForm";
 import HabitList from "../components/HabitList";
 import SearchBar from "../components/SearchBar";
 import { useHabits } from "../context/HabitsContext";
 import ConfirmModal from "../components/ConfirmModal";
 import useConfirm from "../hooks/useConfirm";
-
-
 
 function DashboardPage() {
   const {
@@ -15,7 +14,6 @@ function DashboardPage() {
     totalHabits,
     completedTodayCount,
     progressPercent,
-
     addHabit,
     completeHabit,
     completeHabitYesterday,
@@ -26,15 +24,14 @@ function DashboardPage() {
 
   const confirmUI = useConfirm();
 
- 
-  const [filter, setFilter] = useState("all"); // all | pending | done
+  const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
 
   const filteredHabits = useMemo(() => {
     const sorted = [...habits].sort((a, b) => {
       const aDone = a.completedDates.includes(today);
       const bDone = b.completedDates.includes(today);
-      if (aDone !== bDone) return aDone ? 1 : -1; // pendientes primero
+      if (aDone !== bDone) return aDone ? 1 : -1;
       return 0;
     });
 
@@ -45,7 +42,6 @@ function DashboardPage() {
 
       if (filter === "pending" && doneToday) return false;
       if (filter === "done" && !doneToday) return false;
-
       if (searchText !== "" && !h.name.toLowerCase().includes(searchText)) return false;
 
       return true;
@@ -69,8 +65,11 @@ function DashboardPage() {
               );
               if (ok) resetAll();
             }}
+            type="button"
+            style={{ display: "inline-flex", alignItems: "center", gap: 8 }}
           >
-            Borrar todo 🧯
+            <Trash2 size={16} />
+            <span>Borrar todo</span>
           </button>
         </div>
       </div>
@@ -152,6 +151,7 @@ function DashboardPage() {
           </div>
         </div>
       </div>
+
       <ConfirmModal
         isOpen={confirmUI.isOpen}
         message={confirmUI.message}

@@ -180,3 +180,22 @@
     padding-left:46px;
   }
 }
+.cardIcon{
+  color: #1b8632;
+  flex-shrink: 0;
+}
+
+.bestMeta{
+  margin-top: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #475569;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bestIcon{
+  color: #f59e0b;
+  flex-shrink: 0;
+}
