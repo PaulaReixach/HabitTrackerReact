@@ -2,9 +2,16 @@ import { useState } from "react";
 import styles from "./HabitItem.module.css";
 import ConfirmModal from "./ConfirmModal";
 import useConfirm from "../hooks/useConfirm";
+import MonthCalendar from "./MonthCalendar";
+import { useHabits } from "../context/HabitsContext";
+
+import { Pencil, Trash2, CalendarDays, Flame } from "lucide-react";
 
 function getDateKey(date = new Date()) {
-  return date.toISOString().split("T")[0];
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
 }
 
 function calculateStreak(completedDates) {
@@ -25,9 +32,18 @@ function calculateStreak(completedDates) {
   return streak;
 }
 
-function HabitItem({ habit, onCompleteHabit, onCompleteYesterday, onDeleteHabit, onRenameHabit }) {
+function HabitItem({
+  habit,
+  onCompleteHabit,
+  onCompleteYesterday,
+  onDeleteHabit,
+  onRenameHabit,
+}) {
   const [isEditing, setIsEditing] = useState(false);
   const [draftName, setDraftName] = useState(habit.name);
+  const [showCalendar, setShowCalendar] = useState(false);
+
+  const { toggleHabitDate } = useHabits();
   const confirmUI = useConfirm();
 
   const today = getDateKey();
@@ -56,32 +72,34 @@ function HabitItem({ habit, onCompleteHabit, onCompleteYesterday, onDeleteHabit,
     if (e.key === "Enter") saveEditing();
     if (e.key === "Escape") cancelEditing();
   }
+  
 
   return (
     <li className={styles.item}>
       <div className={styles.top}>
-        {/* IZQUIERDA: info */}
+        {/* IZQUIERDA */}
         <div style={{ flex: 1 }}>
           {!isEditing ? (
             <>
-              <div className={styles.title}>
-                {habit.name} {isCompletedToday && "✅"}
-              </div>
+              <div className={styles.title}>{habit.name}</div>
 
               <div className={styles.meta}>
-                🔥 Racha: {streak} día{streak === 1 ? "" : "s"}
+                <Flame size={14} color="#f59e0b" style={{ marginRight: 6 }} />
+                {streak} día{streak === 1 ? "" : "s"}
               </div>
 
               <div className={styles.pills}>
                 {isCompletedToday ? (
                   <span className={`${styles.pill} ${styles.pillSuccess}`}>
-                    ✅ Hecho hoy
+                    Hecho hoy
                   </span>
                 ) : (
-                  <span className={styles.pill}>⏳ Pendiente</span>
+                  <span className={styles.pill}>Pendiente</span>
                 )}
 
-                <span className={styles.pill}>🔥 {streak} días</span>
+                <span className={styles.pill}>
+                  {streak} día{streak === 1 ? "" : "s"}
+                </span>
               </div>
             </>
           ) : (
@@ -93,12 +111,15 @@ function HabitItem({ habit, onCompleteHabit, onCompleteYesterday, onDeleteHabit,
                 onKeyDown={handleKeyDown}
                 autoFocus
               />
-              <div className={styles.meta}>Enter = guardar · Esc = cancelar</div>
+
+              <div className={styles.meta}>
+                Enter = guardar · Esc = cancelar
+              </div>
             </>
           )}
         </div>
 
-        {/* DERECHA: acciones */}
+        {/* DERECHA */}
         <div className={styles.actions}>
           {!isEditing ? (
             <>
@@ -121,42 +142,74 @@ function HabitItem({ habit, onCompleteHabit, onCompleteYesterday, onDeleteHabit,
                 className={`btn ${styles.iconBtn}`}
                 onClick={startEditing}
                 title="Editar"
+                type="button"
               >
-                ✏️
+                <Pencil size={18} />
               </button>
 
-               <button
+              <button
                 className={`btn ${styles.iconBtn}`}
                 onClick={async () => {
                   const ok = await confirmUI.confirm(
-                      <>
-                        ¿Seguro que quieres borrar <strong>{habit.name}</strong>? Esta acción no se puede deshacer.
-                      </>
+                    <>
+                      ¿Seguro que quieres borrar{" "}
+                      <strong>{habit.name}</strong>? Esta acción no se puede
+                      deshacer.
+                    </>
                   );
+
                   if (ok) onDeleteHabit(habit.id);
                 }}
+                title="Borrar"
+                type="button"
               >
-                🗑️
+                <Trash2 size={18} />
+              </button>
+
+              <button
+                className={`btn ${styles.iconBtn}`}
+                onClick={() => setShowCalendar((v) => !v)}
+                title="Calendario"
+                type="button"
+              >
+                <CalendarDays size={18} />
               </button>
             </>
           ) : (
             <>
-              <button className={`btn btnPrimary ${styles.btnLg}`} onClick={saveEditing}>
+              <button
+                className={`btn btnPrimary ${styles.btnLg}`}
+                onClick={saveEditing}
+              >
                 Guardar
               </button>
-              <button className={`btn ${styles.btnLg}`} onClick={cancelEditing}>
+
+              <button
+                className={`btn ${styles.btnLg}`}
+                onClick={cancelEditing}
+              >
                 Cancelar
               </button>
             </>
           )}
         </div>
-          <ConfirmModal
+
+        <ConfirmModal
           isOpen={confirmUI.isOpen}
           message={confirmUI.message}
           onCancel={confirmUI.onCancel}
           onConfirm={confirmUI.onConfirm}
         />
       </div>
+
+      {showCalendar && (
+        <div style={{ marginTop: 10 }}>
+          <MonthCalendar
+            completedDates={habit.completedDates}
+            onToggleDate={(dateKey) => toggleHabitDate(habit.id, dateKey)}
+          />
+        </div>
+      )}
     </li>
   );
 }

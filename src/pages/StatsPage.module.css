@@ -1,0 +1,182 @@
+.statsPage{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+.header{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+}
+
+.title{
+  margin:0;
+  font-size:22px;
+  font-weight:600;
+  color:#0f172a;
+}
+
+.subtitle{
+  margin:4px 0 0 0;
+  font-size:14px;
+  font-weight:400;
+  color:#64748b;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap:12px;
+}
+
+.statCard{
+  background: linear-gradient(180deg, #ffffff, #fbfcfe);
+  border:1px solid rgba(15, 23, 42, 0.08);
+  border-radius:16px;
+  padding:16px;
+}
+
+.cardTop{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:10px;
+}
+
+.cardLabel{
+  font-size:14px;
+  font-weight:500;
+  color:#64748b;
+}
+
+.cardIcon{
+  font-size:16px;
+  opacity:.85;
+}
+
+.cardValue{
+  font-size:28px;
+  font-weight:600;
+  color:#0f172a;
+  line-height:1.1;
+}
+
+.section{
+  display:block;
+}
+
+.highlightCard,
+.listCard{
+  background: linear-gradient(180deg, #ffffff, #fbfcfe);
+  border:1px solid rgba(15, 23, 42, 0.08);
+  border-radius:16px;
+  padding:16px;
+}
+
+.sectionLabel{
+  font-size:14px;
+  font-weight:500;
+  color:#64748b;
+  margin-bottom:10px;
+}
+
+.bestName{
+  font-size:20px;
+  font-weight:600;
+  color:#0f172a;
+}
+
+.bestMeta{
+  margin-top:6px;
+  font-size:14px;
+  font-weight:500;
+  color:#475569;
+}
+
+.empty{
+  font-size:14px;
+  font-weight:400;
+  color:#94a3b8;
+}
+
+.ranking{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.rankRow{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 0;
+  border-bottom:1px solid rgba(15, 23, 42, 0.06);
+}
+
+.rankRow:last-child{
+  border-bottom:none;
+  padding-bottom:0;
+}
+
+.rankLeft{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  min-width:0;
+}
+
+.rankNumber{
+  width:34px;
+  height:34px;
+  border-radius:999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:13px;
+  font-weight:600;
+  color:#0f172a;
+  background: rgba(15, 23, 42, 0.05);
+  flex-shrink:0;
+}
+
+.habitName{
+  font-size:15px;
+  font-weight:500;
+  color:#0f172a;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.habitMeta{
+  margin-top:2px;
+  font-size:13px;
+  font-weight:400;
+  color:#94a3b8;
+}
+
+.rankValue{
+  font-size:14px;
+  font-weight:500;
+  color:#475569;
+  white-space:nowrap;
+}
+
+@media (max-width: 700px){
+  .cards{
+    grid-template-columns: 1fr;
+  }
+
+  .rankRow{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .rankValue{
+    padding-left:46px;
+  }
+}

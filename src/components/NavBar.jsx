@@ -15,6 +15,10 @@ function Navbar() {
                 Stats
             </NavLink>
 
+            <NavLink to="/calendar" className={linkClass}>
+                Calendar
+            </NavLink>
+
             <NavLink to="/settings" className={linkClass}>
                 Settings
             </NavLink>

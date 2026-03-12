@@ -1,23 +1,13 @@
 import { createContext, useContext, useMemo} from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
-
-/* Helpers */
-function getDateKey(date = new Date()) {
-  return date.toISOString().split("T")[0];
-}
-
-function getYesterdayKey() {
-  const d = new Date();
-  d.setDate(d.getDate() - 1);
-  return getDateKey(d);
-}
+import { dateKeyLocal, getYesterdayKey } from "../utils/dateKey";
 
 function calculateStreak(completedDates) {
   let streak = 0;
   let current = new Date();
 
   while (true) {
-    const key = getDateKey(current);
+    const key = dateKeyLocal(current);
     if (completedDates.includes(key)) {
       streak += 1;
       current.setDate(current.getDate() - 1);
@@ -47,7 +37,7 @@ function HabitsProvider({ children }) {
   }
 
   function completeHabit(id) {
-    const today = getDateKey();
+    const today = dateKeyLocal();
     setHabits((prev) =>
       prev.map((h) => {
         if (h.id !== id) return h;
@@ -64,6 +54,21 @@ function HabitsProvider({ children }) {
         if (h.id !== id) return h;
         if (h.completedDates.includes(yesterday)) return h;
         return { ...h, completedDates: [yesterday, ...h.completedDates] };
+      })
+    );
+  }
+
+  function toggleHabitDate(id, dateKey) { // para marcar o desmarcar una fecha específica (usada en el calendario)
+    setHabits((prev) => 
+      prev.map((h) => {
+        if (h.id !== id) return h; 
+
+        const has = h.completedDates.includes(dateKey); 
+        const completedDates = has // si ya estaba, lo quitamos; si no estaba, lo añadimos
+          ? h.completedDates.filter((d) => d !== dateKey) 
+          : [...h.completedDates, dateKey].sort(); // mantener ordenado
+
+        return { ...h, completedDates }; 
       })
     );
   }
@@ -103,8 +108,18 @@ function HabitsProvider({ children }) {
     setHabits(file);
   }
 
+  const completedByDate = useMemo(() => {
+    const map = {}; // { "2024-01-09": [habit1, habit2], ... }
+    for (const h of habits) {
+      for (const d of h.completedDates) { 
+        if (!map[d]) map[d] = []; 
+        map[d].push({id: h.id, name: h.name});
+      }
+    }
+    return map;
+  }, [habits]);
 
-  const today = getDateKey();
+  const today = dateKeyLocal();
   const totalHabits = habits.length;
   const completedTodayCount = habits.filter((h) => h.completedDates.includes(today)).length;
   const progressPercent =
@@ -131,6 +146,10 @@ function HabitsProvider({ children }) {
     //Settings
     exportHabits,
     importHabits,
+
+    //Calendario
+    toggleHabitDate,
+    completedByDate,
 
     today,
     totalHabits,
