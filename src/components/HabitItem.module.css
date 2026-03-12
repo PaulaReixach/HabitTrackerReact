@@ -64,7 +64,6 @@
   flex-wrap: nowrap;
 }
 
-/* Botones de acción grandes: Hoy / Ayer / Guardar / Cancelar */
 .btnLg{
   padding: 10px 14px;
   border-radius: 12px;
@@ -74,7 +73,7 @@
   white-space: nowrap;
 }
 
-/* Botones cuadrados para iconos lucide */
+
 .iconBtn{
   width: 40px;
   height: 40px;
@@ -112,7 +111,7 @@
   color: #94a3b8;
 }
 
-/* Responsive para pantallas pequeñas */
+
 @media (max-width: 768px){
   .top{
     flex-direction: column;
