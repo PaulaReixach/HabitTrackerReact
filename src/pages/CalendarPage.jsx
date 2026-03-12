@@ -83,7 +83,7 @@ export default function CalendarPage() {
       <div className={styles.top}>
         <div>
           <h2 className={styles.title}>Calendar</h2>
-          <p className={styles.subtitle}>Vista mensual estilo Google</p>
+          <p className={styles.subtitle}>Vista mensual</p>
         </div>
 
         <div className={styles.nav}>
