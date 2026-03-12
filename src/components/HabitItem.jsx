@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import styles from "./HabitItem.module.css";
 import ConfirmModal from "./ConfirmModal";
 import useConfirm from "../hooks/useConfirm";
@@ -50,6 +50,18 @@ function HabitItem({
   const isCompletedToday = habit.completedDates.includes(today);
   const streak = calculateStreak(habit.completedDates);
 
+  const [animateStreak, setAnimateStreak] = useState(false);
+  const prevStreakRef = useRef(streak);
+
+  useEffect(() => {
+    if (streak !== prevStreakRef.current) {
+      setAnimateStreak(true);
+      const timeout = setTimeout(() => setAnimateStreak(false), 350);
+      prevStreakRef.current = streak;
+      return () => clearTimeout(timeout);
+    }
+  }, [streak]);
+
   function startEditing() {
     setDraftName(habit.name);
     setIsEditing(true);
@@ -84,7 +96,7 @@ function HabitItem({
               <div className={styles.title}>{habit.name}</div>
 
               <div className={styles.meta}>
-                <Flame size={14} color="#f59e0b" style={{ marginRight: 6 }} />
+                <Flame size={14} className={`${styles.streakIcon} ${animateStreak ? styles.streakIconAnimated : ""}`}/>
                 {streak} día{streak === 1 ? "" : "s"}
               </div>
 

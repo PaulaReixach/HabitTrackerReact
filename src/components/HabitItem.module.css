@@ -128,3 +128,28 @@
     flex: 0 0 auto;
   }
 }
+
+.streakIcon{
+  color: #f59e0b;
+  margin-right: 6px;
+}
+
+.streakIconAnimated{
+  animation: flamePop 0.35s ease;
+  transform-origin: center;
+}
+
+@keyframes flamePop {
+  0% {
+    transform: scale(0.8) rotate(-8deg);
+    opacity: 0.7;
+  }
+  40% {
+    transform: scale(1.18) rotate(6deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
