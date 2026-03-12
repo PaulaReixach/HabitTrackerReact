@@ -51,7 +51,7 @@
   background:white;
 }
 
-/* Grid estilo Google */
+
 .grid{
   display:grid;
   grid-template-columns: repeat(7, 1fr);
@@ -62,7 +62,7 @@
   background:white;
 }
 
-/* cabecera días */
+
 .dow{
   text-align:center;
   font-weight:500;
@@ -76,7 +76,7 @@
   background: rgba(2,6,23,.03);
 }
 
-/* celdas vacías */
+
 .blank{
   min-height:130px;
   border-right:1px solid rgba(0,0,0,.06);
@@ -84,7 +84,7 @@
   background: rgba(255,255,255,.7);
 }
 
-/* celda clicable */
+
 .cell{
   min-height:130px;
   padding:10px;
@@ -125,7 +125,7 @@
   background: rgba(59,130,246,.04);
 }
 
-/* header dentro de la celda */
+
 .cellHeader{
   display:flex;
   align-items:center;
@@ -158,7 +158,6 @@
   border-radius:999px;
 }
 
-/* lista de eventos */
 .items{
   display:flex;
   flex-direction:column;
@@ -180,7 +179,7 @@
   position:relative;
 }
 
-/* barrita izquierda estilo Google */
+
 .event::before{
   content:"";
   position:absolute;
@@ -200,7 +199,7 @@
   padding-left:2px;
 }
 
-/* botón "+ ver más" */
+
 .moreBtn{
   border:none;
   background:transparent;

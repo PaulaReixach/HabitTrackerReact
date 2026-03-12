@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useHabits } from "../context/HabitsContext";
 import { dateKeyLocal, mondayIndex } from "../utils/dateKey";
-import styles from "./CalendarGoogle.module.css";
+import styles from "./Calendar.module.css";
 import DayHabitsModal from "../components/DayHabitsModal";
 
 function buildMonthCells(year, monthIndex) {

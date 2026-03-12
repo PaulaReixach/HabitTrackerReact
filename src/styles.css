@@ -1,5 +1,4 @@
 :root{
-  /* Base */
   --bg: #f6f7fb;
   --panel: #ffffff;
   --panel-2: #f8fafc;
@@ -13,7 +12,6 @@
   --radius: 16px;
   --radius-sm: 12px;
 
-  /* Brand */
   --primary: #2563eb;
   --primary-2: #1d4ed8;
 
@@ -37,7 +35,7 @@ body{
 
 .page{
   min-height: 100vh;
-  padding-top: 90px; /* espacio para navbar fija */
+  padding-top: 90px; 
   padding-bottom: 32px;
 }
 
@@ -80,7 +78,7 @@ body{
   .grid{ grid-template-columns: 1fr; }
 }
 
-/* Panels / cards */
+
 .panel{
   background: var(--panel);
   border: 1px solid rgba(15, 23, 42, 0.08);
@@ -123,7 +121,7 @@ body{
   font-weight: 800;
 }
 
-/* Actions row (header + filters) */
+
 .actionsRow{
   display: flex;
   gap: 10px;
@@ -131,7 +129,7 @@ body{
   align-items: center;
 }
 
-/* Buttons */
+
 .btn{
   background: #ffffff;
   border: 1px solid rgba(15, 23, 42, 0.12);
@@ -173,7 +171,6 @@ body{
   color: #991b1b;
 }
 
-/* Inputs */
 .input{
   width: 100%;
   padding: 12px;
@@ -194,7 +191,7 @@ body{
   box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
 }
 
-/* Habit list (ul wrapper) */
+
 .list{
   list-style: none;
   padding: 0;
@@ -204,7 +201,7 @@ body{
   gap: 10px;
 }
 
-/* Scroll only inside the right panel */
+
 .listWrap{
   max-height: 520px;
   overflow: auto;
@@ -218,7 +215,7 @@ body{
   border-radius: 999px;
 }
 
-/* Progress */
+
 .progressWrap{
   margin-top: 12px;
 }
@@ -278,7 +275,7 @@ body{
   align-items: center;
 }
 
-/* ===== CONFIRM MODAL ===== */
+
 
 .confirmOverlay{
   position: fixed;
